@@ -3,146 +3,501 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Line Flex Message application">
-    <title>Line Flex Message App</title>
+    <meta name="description" content="Premium Products Marketing">
+    <title>Exclusive Products | Share to Win</title>
     
-    <!-- Google Fonts for modern typography -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- LIFF SDK -->
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     
     <style>
-        /* Base styles with premium feel */
         :root {
-            --line-green: #06C755;
-            --bg-color: #f8fafc;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --card-bg: rgba(255, 255, 255, 0.8);
+            --bg-color: #020617;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #06C755; /* Line Green */
+            --accent-hover: #05a847;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
             background-color: var(--bg-color);
-            background-image: radial-gradient(at 0% 0%, hsla(140, 100%, 85%, 0.4) 0px, transparent 50%),
-                              radial-gradient(at 100% 100%, hsla(210, 100%, 85%, 0.4) 0px, transparent 50%);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(6, 199, 85, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.15), transparent 25%);
             color: var(--text-main);
             margin: 0;
-            padding: 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 0;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            max-width: 800px;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin: 0 0 1rem 0;
+            background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin: 0;
+            font-weight: 300;
+        }
+
+        .products-container {
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 6rem; /* Space for sticky footer */
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            padding: 2rem;
+            width: 100%;
             box-sizing: border-box;
         }
 
-        .glass-container {
+        /* ตกแต่งแถบเลื่อน (Scrollbar) ให้สวยงามเข้ากับเว็บ */
+        .products-grid::-webkit-scrollbar {
+            height: 6px;
+        }
+        .products-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin: 0 1.5rem;
+        }
+        .products-grid::-webkit-scrollbar-thumb {
+            background: rgba(6, 199, 85, 0.5);
+            border-radius: 10px;
+        }
+        .products-grid::-webkit-scrollbar-thumb:hover {
+            background: rgba(6, 199, 85, 0.8);
+        }
+
+        .product-card {
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 1rem;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(6, 199, 85, 0.4);
+            box-shadow: 0 20px 40px -10px rgba(6, 199, 85, 0.15);
+        }
+
+        .product-img-wrapper {
             width: 100%;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 300px; /* Made slightly taller for large screens */
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
         }
 
-        .glass-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
         }
 
-        h1 {
-            color: var(--line-green);
-            font-weight: 700;
-            margin-top: 0;
-            letter-spacing: -0.5px;
+        .product-card:hover .product-img {
+            transform: scale(1.08);
         }
 
-        p {
+        .product-info {
+            padding: 0 0.5rem 0.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .product-desc {
             color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0 0 1.5rem 0;
+            font-weight: 300;
+            flex-grow: 1;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        /* Action Section - Sticky Bottom */
+        .action-section {
+            background: rgba(15, 23, 42, 0.85);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            width: 100%;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            position: fixed; /* Changed to fixed so it's always visible */
+            bottom: 0;
+            left: 0;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 100;
+            box-sizing: border-box;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-container {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .btn {
-            background-color: var(--line-green);
+            background: linear-gradient(135deg, var(--accent) 0%, #048a3a 100%);
             color: white;
             border: none;
-            padding: 0.75rem 2rem;
-            font-size: 1rem;
-            font-weight: 600;
+            padding: 1.2rem 3rem;
+            font-size: 1.2rem;
+            font-weight: 700;
             border-radius: 50px;
             cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            box-shadow: 0 10px 25px -5px rgba(6, 199, 85, 0.5);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 400px;
         }
 
         .btn:hover {
-            background-color: #05a847;
-            transform: scale(1.02);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px -5px rgba(6, 199, 85, 0.6);
         }
 
         .btn:active {
-            transform: scale(0.98);
+            transform: translateY(0) scale(0.98);
+        }
+
+        .status-text {
+            margin-top: 10px;
+            font-weight: 400;
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 3rem 1rem 1rem;
+            }
+            header h1 {
+                font-size: 2.2rem;
+            }
+            header p {
+                font-size: 1rem;
+            }
+            
+            /* Horizontal Scroll for Mobile (Carousel) */
+            .products-grid {
+                display: flex;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                gap: 1rem;
+                padding: 1rem 1.5rem 1.5rem; /* เพิ่ม padding ล่างให้เผื่อพื้นที่ Scrollbar */
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .product-card {
+                flex: 0 0 85vw; /* Show 1 card clearly, peek next card */
+                scroll-snap-align: center;
+                padding: 0.8rem;
+            }
+
+            .product-img-wrapper {
+                height: 250px;
+            }
+            
+            .action-section {
+                padding: 1rem 1.5rem;
+            }
+            
+            .btn {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="glass-container">
-        <h1>Line Flex Message</h1>
-        <p>Your workspace is ready. This is a modern, responsive HTML boilerplate tailored for high-quality UI development.</p>
-        <button class="btn" id="action-btn">Get Started</button>
+
+    <header>
+        <h1>Exclusive Tech Drop</h1>
+        <p>Discover our premium selection of devices. Share with your friends to unlock special discounts.</p>
+    </header>
+
+    <div class="products-container">
+        <div class="products-grid" id="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80" alt="Smartwatch" class="product-img">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Nova Smartwatch Pro</h3>
+                    <p class="product-desc">Advanced health tracking with a sleek aerospace-grade aluminum body.</p>
+                    <div class="product-price">$299</div>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80" alt="Headphones" class="product-img">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Aura ANC Headphones</h3>
+                    <p class="product-desc">Immersive spatial audio with industry-leading active noise cancellation.</p>
+                    <div class="product-price">$349</div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1b5?auto=format&fit=crop&w=600&q=80" alt="Keyboard" class="product-img">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Mechanical Studio Keys</h3>
+                    <p class="product-desc">Tactile custom switches designed for creators and master developers.</p>
+                    <div class="product-price">$189</div>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="product-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1622434641406-a158123450f9?auto=format&fit=crop&w=600&q=80" alt="Watch" class="product-img">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Chronos Classic</h3>
+                    <p class="product-desc">Timeless design meets modern smart features with a sapphire glass face.</p>
+                    <div class="product-price">$450</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action / Share Section -->
+    <div class="action-section">
+        <div class="action-container" id="action-container">
+            <button class="btn" id="action-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                กำลังโหลด...
+            </button>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             const actionBtn = document.getElementById('action-btn');
+            const actionContainer = document.getElementById('action-container');
             
-            // สร้างส่วนแสดงสถานะด้านล่างปุ่ม
             const statusText = document.createElement('p');
-            statusText.style.marginTop = '15px';
-            statusText.style.fontWeight = 'bold';
-            actionBtn.parentNode.appendChild(statusText);
-            
-            actionBtn.addEventListener('click', async () => {
-                // เปลี่ยนสถานะปุ่มตอนกำลังโหลด
-                const originalText = actionBtn.textContent;
-                actionBtn.textContent = 'กำลังส่งข้อความ...';
-                actionBtn.style.backgroundColor = '#0f172a';
+            statusText.className = 'status-text';
+            actionContainer.appendChild(statusText);
+
+            // ==========================================
+            // ระบบเลื่อนอัตโนมัติ (Auto Scroll) บนมือถือทุก 4 วินาที
+            // ==========================================
+            const grid = document.getElementById('products-grid');
+            let autoScrollInterval;
+
+            const startAutoScroll = () => {
+                // ทำงานเฉพาะตอนที่หน้าจอเล็ก (มือถือ)
+                if (window.innerWidth <= 768) {
+                    autoScrollInterval = setInterval(() => {
+                        const cardWidth = grid.querySelector('.product-card').offsetWidth;
+                        const gap = 16; // 1rem gap
+                        
+                        // ถ้าเลื่อนไปสุดขวาแล้ว ให้ตีกลับไปรูปแรก
+                        if (grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 10) {
+                            grid.scrollTo({ left: 0, behavior: 'smooth' });
+                        } else {
+                            // เลื่อนไปรูปถัดไป
+                            grid.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
+                        }
+                    }, 4000); // 4000 = 4 วินาที
+                }
+            };
+
+            const stopAutoScroll = () => {
+                clearInterval(autoScrollInterval);
+            };
+
+            // เริ่มทำงาน
+            startAutoScroll();
+
+            // หยุดเลื่อนชั่วคราวตอนผู้ใช้นิ้วแตะจอ (จะได้ไม่แย่งกันเลื่อน)
+            grid.addEventListener('touchstart', stopAutoScroll, { passive: true });
+            grid.addEventListener('touchend', () => {
+                setTimeout(startAutoScroll, 3000);
+            }, { passive: true });
+            // ==========================================
+
+            try {
+                // 1. เริ่มต้น LIFF SDK
+                await liff.init({ liffId: '2010731152-x6VB9UBa' });
+                
+                if (liff.isLoggedIn()) {
+                    const profile = await liff.getProfile();
+                    statusText.textContent = `👋 ยินดีต้อนรับคุณ ${profile.displayName}`;
+                    statusText.style.color = 'var(--text-muted)';
+                    actionBtn.innerHTML = `
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                        กดแชร์ เพื่อรับส่วนลด
+                    `;
+                } else {
+                    actionBtn.innerHTML = `
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                        LINE Login เพื่อแชร์
+                    `;
+                    actionBtn.addEventListener('click', () => {
+                        liff.login();
+                    });
+                    statusText.textContent = 'กรุณาล็อกอินผ่าน LINE เพื่อรับสิทธิ์';
+                    statusText.style.color = 'var(--text-muted)';
+                    return; 
+                }
+            } catch (err) {
+                console.error('LIFF Init Error:', err);
+                statusText.textContent = '❌ โหลดระบบเชื่อมต่อ LINE ไม่สำเร็จ';
+                statusText.style.color = '#ef4444';
+                actionBtn.textContent = 'เกิดข้อผิดพลาด';
                 actionBtn.disabled = true;
-                statusText.textContent = '';
+            }
+
+            // ==========================================
+            // โครงสร้าง Flex Message JSON สำหรับแชร์
+            // ==========================================
+            const flexMessageJson = {
+                "type": "bubble",
+                "size": "mega",
+                "hero": {
+                    "type": "image",
+                    "url": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
+                    "size": "full",
+                    "aspectRatio": "20:13",
+                    "aspectMode": "cover"
+                },
+                "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                    {
+                        "type": "text",
+                        "text": "Exclusive Tech Drop!",
+                        "weight": "bold",
+                        "size": "xl",
+                        "color": "#00B900"
+                    },
+                    {
+                        "type": "text",
+                        "text": "ค้นพบสินค้าแกดเจ็ตระดับพรีเมียมในราคาพิเศษสุด พร้อมรับส่วนลด 20% เมื่อสั่งซื้อผ่านลิงก์นี้",
+                        "wrap": true,
+                        "color": "#666666",
+                        "size": "sm",
+                        "margin": "md"
+                    }
+                    ]
+                },
+                "footer": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "spacing": "sm",
+                    "contents": [
+                    {
+                        "type": "button",
+                        "style": "primary",
+                        "height": "sm",
+                        "color": "#06C755",
+                        "action": {
+                            "type": "uri",
+                            "label": "รับส่วนลด 20% ที่นี่",
+                            "uri": "https://liff.line.me/2010731152-x6VB9UBa"
+                        }
+                    }
+                    ],
+                    "flex": 0
+                }
+            };
+
+            actionBtn.addEventListener('click', async () => {
+                if (!liff.isLoggedIn()) return;
+
+                if (!liff.isApiAvailable('shareTargetPicker')) {
+                    statusText.textContent = '❌ ต้องเข้าไปเปิด Share Target Picker ในเว็บ LINE Developers ก่อนครับ';
+                    statusText.style.color = '#ef4444';
+                    return;
+                }
 
                 try {
-                    // ยิง Request ไปยัง Backend (Node.js) ของเรา
-                    const response = await fetch('http://localhost:3000/send-flex', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' }
-                    });
-                    
-                    const result = await response.json();
-                    
-                    if (result.success) {
-                        statusText.textContent = '✅ ส่ง Flex Message สำเร็จ! เช็คใน LINE ได้เลย';
+                    const result = await liff.shareTargetPicker([
+                        {
+                            type: "flex",
+                            altText: "🚀 สินค้า Tech สุด Exclusive พร้อมโปรพิเศษ!",
+                            contents: flexMessageJson
+                        }
+                    ], { isMultiple: true });
+
+                    if (result) {
+                        statusText.textContent = '✅ แชร์สินค้าให้เพื่อนสำเร็จแล้ว! รับส่วนลดเลย';
                         statusText.style.color = '#06C755';
                     } else {
-                        console.error(result.error);
-                        statusText.textContent = '❌ เกิดข้อผิดพลาด (ดูรายละเอียดใน Console)';
-                        statusText.style.color = '#ef4444';
+                        statusText.textContent = '⚠️ ยกเลิกการแชร์';
+                        statusText.style.color = '#f59e0b';
                     }
                 } catch (error) {
-                    console.error(error);
-                    statusText.textContent = '❌ ไม่สามารถเชื่อมต่อกับ Backend ได้ (เปิดรัน Server หรือยัง?)';
+                    console.error('Share error:', error);
+                    statusText.textContent = '❌ เกิดข้อผิดพลาดในการแชร์';
                     statusText.style.color = '#ef4444';
-                } finally {
-                    // รีเซ็ตปุ่มกลับมาเหมือนเดิม
-                    setTimeout(() => {
-                        actionBtn.textContent = originalText;
-                        actionBtn.style.backgroundColor = 'var(--line-green)';
-                        actionBtn.disabled = false;
-                    }, 3000);
                 }
             });
         });
