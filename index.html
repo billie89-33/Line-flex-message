@@ -418,56 +418,181 @@
             // โครงสร้าง Flex Message JSON สำหรับแชร์
             // ==========================================
             const flexMessageJson = {
-                "type": "bubble",
-                "size": "mega",
-                "hero": {
-                    "type": "image",
-                    "url": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
-                    "size": "full",
-                    "aspectRatio": "20:13",
-                    "aspectMode": "cover"
-                },
-                "body": {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [
-                    {
-                        "type": "text",
-                        "text": "Exclusive Tech Drop!",
-                        "weight": "bold",
-                        "size": "xl",
-                        "color": "#00B900"
-                    },
-                    {
-                        "type": "text",
-                        "text": "ค้นพบสินค้าแกดเจ็ตระดับพรีเมียมในราคาพิเศษสุด พร้อมรับส่วนลด 20% เมื่อสั่งซื้อผ่านลิงก์นี้",
-                        "wrap": true,
-                        "color": "#666666",
-                        "size": "sm",
-                        "margin": "md"
-                    }
-                    ]
-                },
-                "footer": {
-                    "type": "box",
-                    "layout": "vertical",
-                    "spacing": "sm",
-                    "contents": [
-                    {
-                        "type": "button",
-                        "style": "primary",
-                        "height": "sm",
-                        "color": "#06C755",
-                        "action": {
-                            "type": "uri",
-                            "label": "รับส่วนลด 20% ที่นี่",
-                            "uri": "https://liff.line.me/2010731152-x6VB9UBa"
-                        }
-                    }
-                    ],
-                    "flex": 0
-                }
-            };
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://res.cloudinary.com/dr13kpsqg/image/upload/v1780906367/jamine_store/products/f61q0pi0za5txez077b2.jpg"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Arm Chair, White",
+            "wrap": true,
+            "weight": "bold",
+            "size": "xl"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "$49",
+                "wrap": true,
+                "weight": "bold",
+                "size": "xl",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": ".99",
+                "wrap": true,
+                "weight": "bold",
+                "size": "sm",
+                "flex": 0
+              }
+            ]
+          }
+        ],
+        "background": {
+          "type": "linearGradient",
+          "angle": "0deg",
+          "startColor": "#a0d2eb",
+          "endColor": "#ffffff"
+        }
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "action": {
+              "type": "uri",
+              "label": "Buy Now!",
+              "uri": "https://project-jamine.vercel.app/product/6a26797f946e76767a426f87"
+            }
+          }
+        ],
+        "background": {
+          "type": "linearGradient",
+          "angle": "0deg",
+          "startColor": "#a0d2eb",
+          "endColor": "#a0d2eb"
+        }
+      }
+    },
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "fit",
+        "url": "https://res.cloudinary.com/dr13kpsqg/image/upload/v1782199356/jamine_store/products/kwc1tmuyjwypvv34y83x.jpg",
+        "margin": "none"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Metal Desk Lamp",
+            "wrap": true,
+            "weight": "bold",
+            "size": "xl"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "flex": 1,
+            "contents": [
+              {
+                "type": "text",
+                "text": "$11",
+                "wrap": true,
+                "weight": "bold",
+                "size": "xl",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": ".99",
+                "wrap": true,
+                "weight": "bold",
+                "size": "sm",
+                "flex": 0
+              }
+            ]
+          }
+        ],
+        "background": {
+          "type": "linearGradient",
+          "angle": "0deg",
+          "startColor": "#a0d2eb",
+          "endColor": "#ffffff"
+        }
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "flex": 2,
+            "style": "primary",
+            "action": {
+              "type": "uri",
+              "label": "Buy Now!",
+              "uri": "https://project-jamine.vercel.app/product/6a3a343d893e790d74369aac"
+            }
+          }
+        ],
+        "background": {
+          "type": "linearGradient",
+          "angle": "0deg",
+          "startColor": "#a0d2eb",
+          "endColor": "#a0d2eb"
+        }
+      }
+    },
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "flex": 1,
+            "gravity": "center",
+            "action": {
+              "type": "uri",
+              "label": "See more",
+              "uri": "https://project-jamine.vercel.app/"
+            }
+          }
+        ]
+      }
+    }
+  ]
+};
 
             actionBtn.addEventListener('click', async () => {
                 if (!liff.isLoggedIn()) return;
