@@ -501,8 +501,7 @@
         "size": "full",
         "aspectRatio": "20:13",
         "aspectMode": "fit",
-        "url": "https://res.cloudinary.com/dr13kpsqg/image/upload/v1782199356/jamine_store/products/kwc1tmuyjwypvv34y83x.jpg",
-        "margin": "none"
+        "url": "https://res.cloudinary.com/dr13kpsqg/image/upload/v1782199356/jamine_store/products/kwc1tmuyjwypvv34y83x.jpg"
       },
       "body": {
         "type": "box",
@@ -511,7 +510,7 @@
         "contents": [
           {
             "type": "text",
-            "text": "Metal Desk Lamp",
+            "text": "GEFORCE RTX 5050",
             "wrap": true,
             "weight": "bold",
             "size": "xl"
@@ -554,7 +553,6 @@
         "contents": [
           {
             "type": "button",
-            "flex": 2,
             "style": "primary",
             "action": {
               "type": "uri",
@@ -573,22 +571,69 @@
     },
     {
       "type": "bubble",
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://images.unsplash.com/photo-1550009158-9effb66233d9?auto=format&fit=crop&w=600&q=80"
+      },
       "body": {
         "type": "box",
         "layout": "vertical",
         "spacing": "sm",
         "contents": [
           {
+            "type": "text",
+            "text": "More Products",
+            "wrap": true,
+            "weight": "bold",
+            "size": "xl"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "Discover",
+                "wrap": true,
+                "weight": "bold",
+                "size": "xl",
+                "flex": 0,
+                "color": "#666666"
+              }
+            ]
+          }
+        ],
+        "background": {
+          "type": "linearGradient",
+          "angle": "0deg",
+          "startColor": "#a0d2eb",
+          "endColor": "#ffffff"
+        }
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
             "type": "button",
-            "flex": 1,
-            "gravity": "center",
+            "style": "primary",
             "action": {
               "type": "uri",
               "label": "See more",
               "uri": "https://project-jamine.vercel.app/"
             }
           }
-        ]
+        ],
+        "background": {
+          "type": "linearGradient",
+          "angle": "0deg",
+          "startColor": "#a0d2eb",
+          "endColor": "#a0d2eb"
+        }
       }
     }
   ]
